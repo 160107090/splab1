@@ -1,7 +1,17 @@
 #! /bin/bash
 
-# run this script as "top10 log.txt"
 
-# here comes your solution
-# e.g.
-grep world $1
+cat "log.txt"|grep -e '10/Oct/2006'|cut -d ' ' -f1,4  |awk '{
+	if(address != $1){
+	 	print address,count;
+ 		address = $1;
+ 		count =1;
+ 	}
+ 	else{
+ 		count ++;
+ 	}
+	}'| sort -k2 -n -r|head|awk '
+	{a +=$2;}{
+		
+		print $1,"-",$2,"-",$2/a*100;
+	}';
